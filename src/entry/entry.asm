@@ -1,7 +1,7 @@
 .code32
 .section .text
-.global _start
-_start:
+.global _kstart
+_kstart:
     mov $bootstacktop,%esp
     call kmain
 
