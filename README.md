@@ -16,10 +16,10 @@ Simple-bootloader
     |   |   |   └── pure.asm                    // 没用    
     │   │   ├── bootloader.rs                   // bootloader 引入汇编和座elf读取
     │   │   └── x86_64-diyos-bootloader.json       
-    │   ├── entry                   // 英语
+    │   ├── entry                   
     |   |   ├── entry.asm
     |   |   └── linker64.ld
-    │   ├── main.rs                   // cargo xbuild 不成功
+    │   ├── main.rs                   // 内核 打印 hello world
     │   └── vga_buffer.rs             // 没用、用上也不执行
     ├── .gitignore                    
     ├── Cargo.toml                    
@@ -59,4 +59,4 @@ os.img 位置在target/os.img
 
 ## make file 
 
-1、make qemu
+根目录 make qemu 达到 qemu 加载 os.img 
