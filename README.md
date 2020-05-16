@@ -28,14 +28,17 @@ Simple-bootloader
     ├── rust-toolchain                // nightly-2020-04-26
     └── x86_64-diyos.jsom             
  ```
- 1、进入 /simple-bootloader/src/bin 生成 elf文件
+
+ ## 流程
+
+ 1、进入 /simple-bootloader/src/bin 输入以下命令 生成 elf文件
  
 > cargo xbuild --bin bootloader
 
 2、 生成的elf 在 /target/x86_64-diyos-bootloader/debug/bootloader
 
 3、 把elf 文件 拷贝成为 bin文件 
-> rust-objcopy target/x86_64-diyos-bootloader/debug/bootloader -S -O binary target/x86_64-diyos-bootloader/debug/boot.bin
+> rust-objcopy target/x86_64-diyos-bootloader/debug/bootloader -S -O binary target/x86_64-diyos-bootloader/debug/bootloader.bin
 
 4、qemu加载bin文件、gdb加载elf文件、
 > qemu-system-x86_64 -drive format=raw,file=target/x86_64-diyos-bootloader/debug/boot.bin
@@ -44,4 +47,16 @@ Simple-bootloader
 
 5、逐步调试、打印 scratch_space 值不对
 
-6、目前
+6、在根目录下 cargo xbuild 生成  diyos elf文件、位置在 target/x86_64-diyos/debug/diyos
+
+7、同样生成 diyos.bin 使用 rust-objcopy
+> rust-objcopy target/x86_64-diyos/debug/diyos -S -O binary target/x86_64-diyos-bootloader/debug/diyos.bin
+
+8、把两个bin文件 用dd 拼成 os.img  
+os.img 位置在target/os.img
+
+9、qemu 加载 os.img 还是同样的表现
+
+## make file 
+
+1、make qemu
