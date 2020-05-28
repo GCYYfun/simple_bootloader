@@ -1,9 +1,9 @@
 target 			:= x86_64-diyos
-boottarget 		:= x86_64-diyos-bootloader
+boottarget 		:= x86_64-bootloader
 mode 			:= debug
-boot			:= target/$(boottarget)/$(mode)/bootloader
+boot			:= bootloader/target/$(boottarget)/$(mode)/bootloader
 kernel			:= target/$(target)/$(mode)/diyos
-bootbin			:= target/$(boottarget)/$(mode)/bootloader.bin
+bootbin			:= bootloader/target/$(boottarget)/$(mode)/bootloader.bin
 kernelbin		:= target/$(target)/$(mode)/diyos.bin
 osimg			:= target/os.img
 
@@ -17,7 +17,7 @@ kernel:
 	cargo xbuild
 
 boot:
-	cd src/bin/;cargo xbuild --bin bootloader
+	cd bootloader;cargo xbuild
 
 bootbin: boot
 	$(objcopy) $(boot) -S -O binary $(bootbin)
@@ -39,12 +39,19 @@ asm-kernel:
 clean:
 	cargo clean
 
+boot-clean:
+	cd bootloader;cargo clean
+
 qemu: img
 	qemu-system-x86_64 -drive format=raw,file=$(osimg)
 
-gdb-qemu: img
+debug: img
 	qemu-system-x86_64 -s -S -drive format=raw,file=$(osimg)
+	
+qemu-boot: bootbin
+	qemu-system-x86_64 -drive format=raw,file=$(bootbin)
 
-debug: gdb-qemu
+debug-boot: bootbin
+	qemu-system-x86_64 -drive format=raw,file=$(bootbin)
 
 run: qemu

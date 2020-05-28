@@ -10,7 +10,7 @@
     "linker-flavor": "ld.lld",
     "linker": "rust-lld",
     "pre-link-args": {
-      "ld.lld": ["-Tsrc/bin/boot/linker.ld"]
+      "ld.lld": ["-Tsrc/boot/bloglinker.ld"]
     },
     "panic-strategy": "abort",
     "disable-redzone": true,

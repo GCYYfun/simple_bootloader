@@ -7,7 +7,7 @@ SECTIONS
     . = 0x7c00;
 
     .text : {
-        *(.text)
+        *(.text .text.*)
     }
     .rodata : {
        .rodata .rodata.*
